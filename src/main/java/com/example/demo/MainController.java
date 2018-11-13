@@ -1,18 +1,19 @@
 package com.example.demo;
 
 
+import com.cloudinary.utils.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.io.IOException;
+import java.util.Map;
 
 @Controller
 public class MainController {
@@ -25,6 +26,9 @@ public class MainController {
     RoleRepo roleRepo;
     @Autowired
     PetRepo petRepo;
+
+    @Autowired
+    CloudinaryConfig cloudinaryConfig;
 
 
     @Autowired
@@ -71,16 +75,33 @@ public class MainController {
 
     }
     @PostMapping("/processpet")
-    public String processPet(@Valid @ModelAttribute("message") Pet pet, @AuthenticationPrincipal User user, BindingResult result) {
+    public String processPet(@ModelAttribute Pet pet, @RequestParam("file")MultipartFile file){
 
-        if (result.hasErrors()) {
+
+        if(file.isEmpty()){
+            return "redirect:/processpet";
+        }
+        try{
+            Map uploadResult = cloudinaryConfig.upload(file.getBytes(), ObjectUtils.asMap("resourcetype", "auto"));
+            pet.setImg(uploadResult.get("url").toString());
+            petRepo.save(pet);
+
+        }catch (IOException e){
+            e.printStackTrace();
+            return "redirect:/processpet";
+
+        }
+        return "redirect:/";
+
+
+       /* if (result.hasErrors()) {
             return "addpetlost";
 
         }
 
         pet.setUser(user);
         petRepo.save(pet);
-        return "redirect:/";
+        return "redirect:/";*/
     }
 
 }

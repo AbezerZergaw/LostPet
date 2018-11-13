@@ -20,6 +20,8 @@ public class Pet {
 
     private String status;
 
+    private String img;
+
     @ManyToOne
     private User user;
 
@@ -81,5 +83,13 @@ public class Pet {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
     }
 }
