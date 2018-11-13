@@ -46,7 +46,11 @@
                 <div class="form-group row">
                     <div class="col-xs-4">
                         <label>Status</label>
-                        <input class="form-control" type="text" name="status" placeholder="Status" th:field="*{status}">
+                        <select class="mdb-select md-form" th:field="*{status}">
+                            <option value="">Select</option>
+                            <option th:value="'Lost'" >Lost</option>
+                            <option th:value="'Found'">Found</option>
+                        </select>
                     </div>
                 </div>
                 <div class="form-group row">
