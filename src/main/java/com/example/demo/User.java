@@ -44,7 +44,7 @@ public class User implements UserDetails {
     private Collection<Role> roles;
 
     @OneToMany
-    private List<Message> messageList;
+    private List<Pet> pets;
 
 
     public User() {
@@ -74,21 +74,6 @@ public class User implements UserDetails {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<GrantedAuthority> authorities = new ArrayList<>();
-        for (Role role : roles) {
-            GrantedAuthority authority = new GrantedAuthority() {
-                @Override
-                public String getAuthority() {
-                    return role.getRole();
-                }
-            };
-            authorities.add(authority);
-        }
-        return authorities;
     }
 
 
@@ -156,11 +141,26 @@ public class User implements UserDetails {
         this.roles = roles;
     }
 
-    public List<Message> getMessageList() {
-        return messageList;
+    public List<Pet> getPets() {
+        return pets;
     }
 
-    public void setMessageList(List<Message> messageList) {
-        this.messageList = messageList;
+    public void setPets(List<Pet> pets) {
+        this.pets = pets;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        for (Role role : roles) {
+            GrantedAuthority authority = new GrantedAuthority() {
+                @Override
+                public String getAuthority() {
+                    return role.getRole();
+                }
+            };
+            authorities.add(authority);
+        }
+        return authorities;
     }
 }

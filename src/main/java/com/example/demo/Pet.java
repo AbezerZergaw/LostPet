@@ -1,10 +1,7 @@
 package com.example.demo;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
@@ -23,7 +20,18 @@ public class Pet {
 
     private String status;
 
+    @ManyToOne
+    private User user;
+
     public Pet() {
+    }
+
+    public Pet(String petName, String date, String description, String status, User user) {
+        this.petName = petName;
+        this.date = date;
+        this.description = description;
+        this.status = status;
+        this.user = user;
     }
 
     public long getId() {
@@ -65,5 +73,13 @@ public class Pet {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
