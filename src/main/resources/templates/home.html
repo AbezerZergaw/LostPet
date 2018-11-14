@@ -13,8 +13,29 @@
     <h2>Help Find our Lost Furry Friends &#9785;</h2></div>
 
 
+<div th:each="pet: ${pets}">
+    <div class="col-sm-3">
+        <div class="card text-center">
+            <div class="card-header text-center">
 
+                <!--   <div class="img-box" th:if="${pet.img}!=null">-->
 
+                <strong>
+                    <div th:text="${pet.petName + ' is Missing!'}"></div>
+                    <div th:text="${'Lost on ' + pet.date}"></div>
+                    <br>
+                </strong>
+                <div class="card-body">
+                    <div>
+                        <img th:src="${pet.img}" alt="pet image "/>
+                    </div>
+                </div>
+            </div>
+            <div><span th:text="${pet.description}"></span></div>
+            <div><span th:text="${pet.status}"></span></div>
+        </div>
+    </div>
+</div>
 
 
 

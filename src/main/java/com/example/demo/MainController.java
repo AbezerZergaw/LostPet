@@ -36,7 +36,11 @@ public class MainController {
 
 
     @RequestMapping("/")
-    public String homePage(){
+    public String homePage(Model model){
+
+        model.addAttribute("pets", petRepo.findAll());
+
+
 
         return "home";
     }

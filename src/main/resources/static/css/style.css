@@ -40,3 +40,8 @@ body {
 p {
     background-color: yellow;
 }
+
+body {
+
+    background:url("https://res.cloudinary.com/dsudmfnrq/image/upload/v1541539050/samples/landscapes/landscape-panorama.jpg")
+}
