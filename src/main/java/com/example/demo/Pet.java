@@ -16,7 +16,7 @@ public class Pet {
 
     private String date;
 
-    private String description
+    private String description;
 
     private String status;
 
