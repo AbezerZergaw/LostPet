@@ -98,14 +98,7 @@ public class MainController {
         return "redirect:/";
 
 
-       /* if (result.hasErrors()) {
-            return "addpetlost";
-
-        }
-
-        pet.setUser(user);
-        petRepo.save(pet);
-        return "redirect:/";*/
+     
     }
 
 }
