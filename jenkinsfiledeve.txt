@@ -1,0 +1,50 @@
+pipeline {
+    agent any
+    stages { 
+		stage('Build') {
+           steps {
+                //build job: "$Build_Options", parameters: [string(name: 'PROJ_VERSION', value:"$var_version")]
+               echo 'THIS IS AN EMPTY STEP'
+            }
+		}
+        
+        //Tester Approval
+		stage('Confirmation / Approval to TEST') {
+            steps {
+                mail bcc: '', body: '''Confirmation / Approval to TEST Link: Sign in and press 'Proceed' to Continue Deployment to TEST'"http://ibmjbs:8080/view/DCP/job/dcp.aquip.testenv_pipeline//"''', cc: '', from: 'tmail.tech-res.com', replyTo: '', subject: 'Confirmation / Approval for Build to TEST', to: 'wsumantri@tech-res.com,tshanko@tech-res.com'
+                input message: 'Approve deployment to TEST', parameters: [credentials(credentialType: 'com.cloudbees.plugins.credentials.impl.UsernamePasswordCredentialsImpl', defaultValue: '', description: 'Enter your TRI active directory credentials.', name: 'Credentials_Parameter', required: true)], submitter: 'wsumantri', submitterParameter: 'approving_submitter'
+                /*
+                  Rather than timeout, this will wait for input indefinitely, 
+                  but if another build runs and passes the milestone 1, 
+                  then any previous builds that have not yet passed milestone 1 will be aborted.
+                */
+                milestone 1
+            }
+        }
+        
+		stage('Deploy to TEST') {
+			steps {				
+                   // build job: 'cms.webconfig-update'
+				    //build job: 'DCP - AQUIP Deploy', parameters: [string(name: 'TARGET_ENV', value:"TEST"), string(name: 'PROJ_VERSION', value:"$var_version"), string(name: 'BUILD_TYPE', value:"$BUILD_TYPE")] 		
+					echo 'THIS IS AN EMPTY STEP'		
+			}
+        }
+		
+		stage('Verify Files Deployed to TEST') {
+            steps {
+                //build job: 'VerifyFilesUpdated', parameters: [string(name: 'TARGET_ENV', value:"TSTDCPWEB02")]
+		echo 'THIS IS AN EMPTY STEP'
+            }
+        }
+        
+        stage('Run Automated Test for TEST') {
+            steps {
+                //Uncomment to build CI job
+				//build 'nlm.autotesting.build'
+				echo 'THIS IS AN EMPTY STEP'
+            }
+        }
+        
+        
+    }
+}
